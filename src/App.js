@@ -4,7 +4,7 @@ import './App.css';
 import {menuItems} from './config';
 
 
-class SelectLangage extends React.Component {
+class SelectLangage extends Component {
   render() {
     return (
       <select defaultValue={this.props.value} onChange={(e) => this.props.onChange(e.target.value)}>
@@ -15,19 +15,11 @@ class SelectLangage extends React.Component {
   }
 }
 
-// function ChangeLanguage(props) {
-//   var language = props.language;
-//   return (
-//     <div>{language}</div>
-//   );
-// }
-
-
 function WordBreaker({title, breakAt = 3}) {
   return title && title.split(' ').map(word => word.length <= breakAt ? `${word} ` : <React.Fragment key={word}>{word}<br /></React.Fragment>)
 }
 
-class ShowMore extends React.Component {
+class ShowMore extends Component {
   render() {
     return (
       <ul id="more">
@@ -38,7 +30,7 @@ class ShowMore extends React.Component {
   }
 }
 
-class MenuItems extends React.Component {
+class MenuItems extends Component {
   // constructor(props) {
   //   super(props);
   // }
@@ -126,7 +118,7 @@ class NavBar extends Component {
   }
 }
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <div className="App">
