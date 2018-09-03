@@ -1,21 +1,41 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {menuItems} from './config.js';
+import {menuItems} from './config';
 
-class SelectLanguage extends Component {
+
+class SelectLangage extends React.Component {
   render() {
     return (
-      <select defaultValue="hr">
-        <option key="hr" value="hr">HR</option>
-        <option key="en" value="en">EN</option>
+      <select defaultValue={this.props.value} onChange={(e) => this.props.onChange(e.target.value)}>
+        <option key='hr' value="hr">HR</option>
+        <option key='en' value="en">EN</option>
       </select>
     )
   }
 }
 
+// function ChangeLanguage(props) {
+//   var language = props.language;
+//   return (
+//     <div>{language}</div>
+//   );
+// }
+
+
 function WordBreaker({title, breakAt = 3}) {
   return title && title.split(' ').map(word => word.length <= breakAt ? `${word} ` : <React.Fragment key={word}>{word}<br /></React.Fragment>)
+}
+
+class ShowMore extends React.Component {
+  render() {
+    return (
+      <ul id="more">
+        <li>{menuItems.hr[1]}</li>
+        <li>{menuItems.hr[2]}</li>
+      </ul>
+    )
+  }
 }
 
 class MenuItems extends React.Component {
@@ -24,8 +44,11 @@ class MenuItems extends React.Component {
   // }
   render() {
     return (
-      <ul>
+      <ul id="menu-items">
         {this.props.items.map(item => <li ref={item.ref} key={item.text}><WordBreaker title={item.text} /></li>)}
+        <li>...
+          <ShowMore />
+        </li>
       </ul>
     )
   }
@@ -33,7 +56,10 @@ class MenuItems extends React.Component {
 
 function prepareItems (items) {
   return items.map(item => ({
-    text: item
+    text: item,
+    width: 0,
+    shown: true,
+    ref: React.createRef()
   }))
 }
 
@@ -48,19 +74,63 @@ class NavBar extends Component {
       language: defaultLanguage,
       items: prepareItems(items)
     }
+
+    this.onWindowResize = this.onWindowResize.bind(this)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.language !== this.state.language) {
+      this.setState({
+        items: prepareItems(this.props.items[this.state.language])
+      })
+    }
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.onWindowResize)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.onWindowResize)
+  }
+
+  onWindowResize (event) {
+    console.warn('window resized', event.target.outerWidth)
+
+    const sumOfAllWidths = this.state.items.reduce((sum, item) => sum + item.width, 0)
+
+
+    const difference = event.target.outerWidth - sumOfAllWidths
+
+    
+    const items = this.state.items.map(function(item) {
+      return {
+        ...item,
+        width: item.ref.current.offsetWidth
+      }
+    }).filter(function(item) {
+      if (item.width >= difference) {
+        return false
+      }
+      else {
+        return true
+      }
+    })
+
+    this.setState({items: items})
   }
 
   render () {
     return (
       <header className="App-header">
         <MenuItems items={this.state.items} />
-        <SelectLanguage />
+        <SelectLangage onChange={language => this.setState({language})} />
       </header>
     )
   }
 }
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="App">
@@ -69,5 +139,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
