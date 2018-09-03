@@ -109,12 +109,8 @@ class NavBar extends Component {
         width: item.ref.current.offsetWidth
       }
     }).filter(function(item) {
-      if (item.width >= difference) {
-        return false
-      }
-      else {
-        return true
-      }
+      if (item.width >= difference) return false
+      return true
     })
 
     this.setState({items: items})
