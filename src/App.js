@@ -8,8 +8,8 @@ class SelectLangage extends Component {
   render() {
     return (
       <select defaultValue={this.props.value} onChange={(e) => this.props.onChange(e.target.value)}>
-        <option key='hr' value="hr">HR</option>
-        <option key='en' value="en">EN</option>
+        <option key='hr' value="hr">Hrvatski</option>
+        <option key='en' value="en">English</option>
       </select>
     )
   }
@@ -30,7 +30,7 @@ class MenuItems extends Component {
         ))}
         <li>
           ...
-          <ul id="more">
+          <ul id="more" className="hidden">
             {this.props.items.filter(({ shown }) => !shown).map(item => (
               <li key={item.text}>
                 <WordBreaker title={item.text} />

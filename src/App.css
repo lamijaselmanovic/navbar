@@ -9,8 +9,10 @@ body {
 
 header {
   width: 100%;
-  padding: 50px 0;
+  margin: 50px 0;
   display: flex;
+  background: #fff;
+  height: 120px;
 }
 
 ul {
@@ -22,11 +24,12 @@ ul#menu-items {
   justify-content: space-between;
   width: 100%;
   margin: 0 130px 0 0;
-  background: #fff;
+  // padding: 0 30px;
 }
 
 ul#menu-items > li {
-  padding: 30px 10px;
+  padding: 0 10px;
+  margin: auto 0;
   text-transform: uppercase;
   position: relative;
   color: #fff;
@@ -45,30 +48,37 @@ a {
 
 select {
   position: absolute;
-  top: 90px;
+  top: 100px;
   right: 0;
-  width: 130px;
+  width: 100px;
   background: #fff;
 }
 
 #more {
   background: #fff;
   position: absolute;
-  top: 114px;
-  right: 0;
+  top: 69px;
+  right: -92px;
   width: 200px;
-  border: 1px solid #000;
+  border: 1px solid #BABBBB;
+  border-radius: 4px;
+  -webkit-box-shadow: -4px 40px 79px 10px rgba(0,0,0,0.72);
+  -moz-box-shadow: -4px 40px 79px 10px rgba(0,0,0,0.72);
+  box-shadow: -4px 40px 79px 10px rgba(0,0,0,0.72);
 }
 
-#menu-items:hover #more {
-  display: block;
+@media only screen and (max-width: 920px) {
+  #menu-items:hover #more {
+    display: block;
+  }
 }
 
 #more li {
   float: left;
   width: 100%;
-  border-bottom: 1px solid #000;
-  padding: 10px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #DBDBDB;
+  padding: 10px 20px;
 }
 
 .hidden {
